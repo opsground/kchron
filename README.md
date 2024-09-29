@@ -86,7 +86,7 @@ its dependencies.
 Users can just run kubectl apply -f <URL for YAML BUNDLE> to install the project, i.e.:
 
 ```sh
-kubectl apply -f https://raw.githubusercontent.com/<org>/kchron/<tag or branch>/dist/install.yaml
+kubectl apply -f https://raw.githubusercontent.com/opsground/kchron/refs/heads/master/manifests/install.yaml
 ```
 
 ## Contributing
