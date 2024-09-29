@@ -1,0 +1,23 @@
+# permissions for end users to view cronrestarts.
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRole
+metadata:
+  labels:
+    app.kubernetes.io/name: kchron
+    app.kubernetes.io/managed-by: kustomize
+  name: cronrestart-viewer-role
+rules:
+- apiGroups:
+  - resources.kchron.io
+  resources:
+  - cronrestarts
+  verbs:
+  - get
+  - list
+  - watch
+- apiGroups:
+  - resources.kchron.io
+  resources:
+  - cronrestarts/status
+  verbs:
+  - get

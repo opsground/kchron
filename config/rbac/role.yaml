@@ -1,0 +1,46 @@
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRole
+metadata:
+  name: manager-role
+rules:
+- apiGroups:
+  - apps
+  resources:
+  - daemonsets
+  - deployments
+  - statefulsets
+  verbs:
+  - create
+  - delete
+  - get
+  - list
+  - patch
+  - update
+  - watch
+- apiGroups:
+  - resources.kchron.io
+  resources:
+  - cronrestarts
+  verbs:
+  - create
+  - delete
+  - get
+  - list
+  - patch
+  - update
+  - watch
+- apiGroups:
+  - resources.kchron.io
+  resources:
+  - cronrestarts/finalizers
+  verbs:
+  - update
+- apiGroups:
+  - resources.kchron.io
+  resources:
+  - cronrestarts/status
+  verbs:
+  - get
+  - patch
+  - update
