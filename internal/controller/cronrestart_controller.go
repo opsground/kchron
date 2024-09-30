@@ -10,6 +10,8 @@ import (
 	"k8s.io/apimachinery/pkg/runtime"
 	ctrl "sigs.k8s.io/controller-runtime"
 	"sigs.k8s.io/controller-runtime/pkg/client"
+	"sigs.k8s.io/controller-runtime/pkg/event"
+	"sigs.k8s.io/controller-runtime/pkg/predicate"
 
 	resourcesv1alpha1 "github.com/opsground/kchron/api/v1alpha1"
 )
@@ -150,5 +152,19 @@ func (r *CronRestartReconciler) restartDaemonSet(ctx context.Context, namespace,
 func (r *CronRestartReconciler) SetupWithManager(mgr ctrl.Manager) error {
 	return ctrl.NewControllerManagedBy(mgr).
 		For(&resourcesv1alpha1.CronRestart{}).
+		WithEventFilter(predicate.Funcs{
+			CreateFunc: func(e event.CreateEvent) bool {
+				setupLog.Info("ObjectCreated", "name", e.Object.GetName(), "namespace", e.Object.GetNamespace(), "object", e.Object)
+				return true
+			},
+			UpdateFunc: func(e event.UpdateEvent) bool {
+				setupLog.Info("ObjectUpdated", "name", e.ObjectNew.GetName(), "namespace", e.ObjectNew.GetNamespace(), "object", e.ObjectNew)
+				return true
+			},
+			DeleteFunc: func(e event.DeleteEvent) bool {
+				setupLog.Info("ObjectDeleted", "name", e.Object.GetName(), "namespace", e.Object.GetNamespace())
+				return true
+			},
+		}).
 		Complete(r)
 }
