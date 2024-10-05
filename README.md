@@ -1,8 +1,25 @@
 # kchron
-// TODO(user): Add simple overview of use/purpose
+The operator will monitor Kubernetes resources (Deployments, StatefulSets and DaemonSets) and perform rolling restarts based on user-defined cron schedules. This allows for scheduled restarts, ensuring resources are refreshed periodically without manual intervention. The design will be modular and production-ready, adhering to Kubernetes best practices.
 
 ## Description
-// TODO(user): An in-depth paragraph about your project and overview of use
+
+Simple usages
+```yaml
+---
+apiVersion: resources.kchron.io/v1alpha1
+kind: CronRestart
+metadata:
+  labels:
+    app.kubernetes.io/name: kchron
+  name: guestbook-ui
+  namespace: default
+spec:
+  namespace: default
+  resourceType: Deployment
+  resources:
+    - guestbook-ui
+  cronSchedule: "*/3 * * * *"
+```
 
 ## Getting Started
 
