@@ -21,6 +21,12 @@ spec:
   cronSchedule: "*/3 * * * *"
 ```
 
+´´´sh
+➜ kubectl get crs
+NAME           NAMESPACE   RESOURCETYPE   RESOURCES          SCHEDULE
+guestbook-ui   default     Deployment     ["guestbook-ui"]   */3 * * * *
+´´´
+
 ## Getting Started
 
 ### Prerequisites
