@@ -1,5 +1,5 @@
 # Image URL to use all building/pushing image targets
-IMG ?= kchron:v0.0.1_local
+IMG ?= kchron:v0.0.2_local
 # ENVTEST_K8S_VERSION refers to the version of kubebuilder assets to be downloaded by envtest binary.
 ENVTEST_K8S_VERSION = 1.31.0
 

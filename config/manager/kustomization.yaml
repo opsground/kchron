@@ -5,4 +5,4 @@ kind: Kustomization
 images:
 - name: controller
   newName: quay.io/opsground/kchron
-  newTag: v0.0.1_local
+  newTag: v0.0.2_local

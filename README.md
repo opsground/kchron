@@ -89,6 +89,40 @@ Users can just run kubectl apply -f <URL for YAML BUNDLE> to install the project
 kubectl apply -f https://raw.githubusercontent.com/opsground/kchron/refs/heads/master/manifests/install.yaml
 ```
 
+3. See the logs in `kchron-system` namespace
+
+```sh
+2024-10-05T00:41:11Z	INFO	Action	Setting up controller
+2024-10-05T00:41:11Z	INFO	Action	Controller setup completed
+2024-10-05T00:41:11Z	INFO	setup	starting manager
+2024-10-05T00:41:11Z	INFO	controller-runtime.metrics	Starting metrics server
+2024-10-05T00:41:11Z	INFO	setup	disabling http/2
+2024-10-05T00:41:11Z	INFO	starting server	{"name": "health probe", "addr": "[::]:8081"}
+I1005 00:41:11.038813       1 leaderelection.go:254] attempting to acquire leader lease kchron-system/3d0a3273.kchron.io...
+I1005 00:41:11.111978       1 leaderelection.go:268] successfully acquired lease kchron-system/3d0a3273.kchron.io
+2024-10-05T00:41:11Z	DEBUG	events	kchron-controller-manager-5cbdd79976-p29jc_9d8775c1-e05c-4933-8d5d-1d6a64f4bd82 became leader	{"type": "Normal", "object": {"kind":"Lease","namespace":"kchron-system","name":"3d0a3273.kchron.io","uid":"42e11a5b-d7be-46aa-98ce-c350b570346b","apiVersion":"coordination.k8s.io/v1","resourceVersion":"732032"}, "reason": "LeaderElection"}
+2024-10-05T00:41:11Z	INFO	Starting EventSource	{"controller": "cronrestart", "controllerGroup": "resources.kchron.io", "controllerKind": "CronRestart", "source": "kind source: *v1alpha1.CronRestart"}
+2024-10-05T00:41:11Z	INFO	Starting Controller	{"controller": "cronrestart", "controllerGroup": "resources.kchron.io", "controllerKind": "CronRestart"}
+2024-10-05T00:41:11Z	INFO	Starting workers	{"controller": "cronrestart", "controllerGroup": "resources.kchron.io", "controllerKind": "CronRestart", "worker count": 1}
+```
+
+4. After creating CronRestart resource 
+
+```sh
+2024-10-05T00:41:11Z	INFO	Action	ObjectCreated	{"name": "guestbook-ui", "namespace": "default", "object": {"kind":"CronRestart","apiVersion":"resources.kchron.io/v1alpha1","metadata":{"name":"guestbook-ui","namespace":"default","uid":"d8d5eee9-4fa0-4ea6-b70c-431f8b1fe101","resourceVersion":"729767","generation":2,"creationTimestamp":"2024-10-05T00:05:38Z","labels":{"app.kubernetes.io/managed-by":"kustomize","app.kubernetes.io/name":"kchron"},"annotations":{"kubectl.kubernetes.io/last-applied-configuration":"{\"apiVersion\":\"resources.kchron.io/v1alpha1\",\"kind\":\"CronRestart\",\"metadata\":{\"annotations\":{},\"labels\":{\"app.kubernetes.io/managed-by\":\"kustomize\",\"app.kubernetes.io/name\":\"kchron\"},\"name\":\"guestbook-ui\",\"namespace\":\"default\"},\"spec\":{\"cronSchedule\":\"*/3 * * * *\",\"namespace\":\"default\",\"resourceType\":\"Deployment\",\"resources\":[\"guestbook-ui\"]}}\n"},"managedFields":[{"manager":"kubectl-client-side-apply","operation":"Update","apiVersion":"resources.kchron.io/v1alpha1","time":"2024-10-05T00:12:28Z","fieldsType":"FieldsV1","fieldsV1":{"f:metadata":{"f:annotations":{".":{},"f:kubectl.kubernetes.io/last-applied-configuration":{}},"f:labels":{".":{},"f:app.kubernetes.io/managed-by":{},"f:app.kubernetes.io/name":{}}},"f:spec":{".":{},"f:cronSchedule":{},"f:namespace":{},"f:resourceType":{},"f:resources":{}}}}]},"spec":{"namespace":"default","resourceType":"Deployment","resources":["guestbook-ui"],"cronSchedule":"*/3 * * * *"},"status":{}}}
+2024-10-05T00:41:11Z	INFO	Action	Cron job scheduled	{"CronRestart": "guestbook-ui", "CronJobID": "cron-default-guestbook-ui"}
+2024-10-05T00:41:11Z	INFO	controller-runtime.metrics	Serving metrics server	{"bindAddress": ":8443", "secure": true}
+2024-10-05T00:42:00Z	INFO	Action	Successfully restarted Deployment	{"Namespace": "default", "Name": "guestbook-ui"}
+```
+
+5. After deleting the resource 
+
+```sh
+2024-10-05T00:47:20Z	INFO	Action	ObjectDeleted	{"name": "guestbook-ui", "namespace": "default"}
+2024-10-05T00:47:20Z	INFO	Action	Cron job removed due to resource deletion	{"CronJobID": "cron-default-guestbook-ui"}
+```
+
+
 ## Contributing
 // TODO(user): Add detailed information on how you would like others to contribute to this project
 
