@@ -1,3 +1,4 @@
+---
 apiVersion: resources.kchron.io/v1alpha1
 kind: CronRestart
 metadata:
@@ -11,5 +12,19 @@ spec:
   resourceType: Deployment
   resources:
     - guestbook-ui
-    - guestbook-ui2
-  cronSchedule: "*/2 * * * *"
+  cronSchedule: "*/3 * * * *"
+---
+apiVersion: resources.kchron.io/v1alpha1
+kind: CronRestart
+metadata:
+  labels:
+    app.kubernetes.io/name: kchron
+    app.kubernetes.io/managed-by: kustomize
+  name: app0-web
+  namespace: dev
+spec:
+  namespace: dev
+  resourceType: Deployment
+  resources:
+    - app0-web
+  cronSchedule: "*/1 * * * *"
